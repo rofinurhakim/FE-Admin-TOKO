@@ -22,6 +22,22 @@ export const Data = {
         },
         {
             header: true,
+            name: 'Master'
+        },
+        {
+            dropdown: true,
+            // active: true,
+            name: 'Master',
+            icon: 'fas fa-fire',
+            children: [{
+                    name: 'Products',
+                    url: '/products',
+                    // active: true
+                },
+            ]
+        },
+        {
+            header: true,
             name: 'Starter'
         },
         {

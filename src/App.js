@@ -31,7 +31,7 @@ import { useLocation } from "react-router-dom";
 // import PostCreate from "./pages/Pages/Features/PostCreate";
 // import Posts from "./pages/Pages/Features/Posts";
 
-
+import MasterProductsPage from "./pages/Master/product";
 import EcommerceDashboard from "./pages/Dashboard/EcommerceDashboard";
 import GeneralDashboard from "./pages/Dashboard/GeneralDashboard";
 import DefaultLayoutPage from "./pages/Strater/DefaultLayoutPage";
@@ -182,6 +182,11 @@ function App() {
           <Route
             path="/layout/transparent-sidebar"
             component={TransparentSidebar}
+          />
+          
+          <Route
+            path="/products"
+            component={MasterProductsPage}
           />
           <Route path="/bootstrap/alert" component={BootstrapAlert} />
           <Route path="/bootstrap/badge" component={BootstrapBadge} />

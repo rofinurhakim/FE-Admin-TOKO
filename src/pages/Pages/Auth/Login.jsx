@@ -135,9 +135,9 @@ export class Login extends Component {
                   Don't have an account?{" "}
                   <a href="auth-register.html">Create One</a>
                 </div>
-                <div className="simple-footer">
+                {/* <div className="simple-footer">
                   Copyright &copy; Stisla 2018
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
