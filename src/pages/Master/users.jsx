@@ -5,10 +5,10 @@ import { Link, useHistory } from 'react-router-dom'
 import Pagination from "../Components/Pagination"
 import NoData from "../Components/NoData";
 
-const MasterProduct = (props) => {
+const MasterUsers = (props) => {
   const history = useHistory();
-  let [products, setProducts] = useState([]);
-  const imageUri = "http://localhost:5000/";
+  let [users, setUsers] = useState([]);
+  const imageUri = "http://localhost:3000/";
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [pagecount, setPageCount] = useState(0);
@@ -37,7 +37,7 @@ const MasterProduct = (props) => {
       .then((res) => {
         console.log(res);
 
-        setProducts((prevState) => res.data.products);
+        setUsers((prevState) => res.data.products);
         setPageCount((prevState) => res.data.pageCount);
       })
       .catch((err) => {});
@@ -46,7 +46,7 @@ const MasterProduct = (props) => {
   useEffect(() => {
     const getList = () => {
       client
-        .get("/api/v1/products", {
+        .get("/api/v1/login", {
           params: {
             page,
             limit,
@@ -56,7 +56,7 @@ const MasterProduct = (props) => {
           },
         })
         .then((res) => {
-          setProducts((prevState) => res.data.products);
+          setUsers((prevState) => res.data.users);
           setPageCount((prevState) => res.data.pageCount);
         })
         .catch((err) => {});
@@ -82,13 +82,13 @@ const MasterProduct = (props) => {
     <div className="main-content">
       <section className="section">
         <div className="section-header">
-          <h1>Products</h1>
+          <h1>Users</h1>
           <div className="section-header-breadcrumb">
             <div className="breadcrumb-item active">
               <a href="#">Dashboard</a>
             </div>
             <div className="breadcrumb-item">
-              <a href="#">Products</a>
+              <a href="#">Users</a>
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@ const MasterProduct = (props) => {
                 </div>
               </div>
 
-              {!products.length ? (
+              {!users.length ? (
                 <NoData />
               ) : (
                 <div className="table-responsive">
@@ -167,7 +167,7 @@ const MasterProduct = (props) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {products.map((item, index) => {
+                      {users.map((item, index) => {
                         console.log(item);
                         return (
                           <tr key={index}>
@@ -237,4 +237,4 @@ const MasterProduct = (props) => {
   );
 };
 
-export default MasterProduct;
+export default MasterUsers;
