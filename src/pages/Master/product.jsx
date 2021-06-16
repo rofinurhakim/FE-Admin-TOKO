@@ -8,7 +8,7 @@ import NoData from "../Components/NoData";
 const MasterProduct = (props) => {
   const history = useHistory();
   let [products, setProducts] = useState([]);
-  const imageUri = "http://localhost:5000/";
+  const imageUri = "http://localhost:3000/";
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [pagecount, setPageCount] = useState(0);

@@ -1,19 +1,41 @@
-import React, { Component } from "react";
+import  React, { Component, useState }from "react";
+import { useForm, LoginData } from "../../../pages/Pages/service/login";
 import $ from "jquery";
+import {useHistory} from 'react-router-dom'
 
-export class Login extends Component {
-  componentDidMount() {
-    $(".needs-validation").submit(function(event) {
-      let form = $(this);
-      if (form[0].checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      form.addClass("was-validated");
-    });
+const Login = () => {
+  const history = useHistory()
+  const { form, inputChangeHanlder } = useForm();
+  const [loader, setLoader] = useState(false);
+
+  const submitForm = async () => {
+    setLoader(true);
+    LoginData(form, setLoader, nextLogin);
+   
+  };
+
+  const nextLogin = () => {
+    console.log('jalan')
+    history.push('/')
+    history.go()
   }
 
-  render() {
+  const goToRegister = () => {
+    history.push('/auth/register')
+  }
+
+  // componentDidMount() {
+  //   $(".needs-validation").submit(function(event) {
+  //     let form = $(this);
+  //     if (form[0].checkValidity() === false) {
+  //       event.preventDefault();
+  //       event.stopPropagation();
+  //     }
+  //     form.addClass("was-validated");
+  //   });
+  // }
+
+  // render() {
     return (
       <div id="app">
         <section className="section">
@@ -51,7 +73,9 @@ export class Login extends Component {
                           tabIndex="1"
                           required
                           autoFocus
+                          onChange={(e) => inputChangeHanlder(e)}
                         />
+                        <span className="text-danger"></span>
                         <div className="invalid-feedback">
                           Please fill in your email
                         </div>
@@ -62,14 +86,14 @@ export class Login extends Component {
                           <label htmlFor="password" className="control-label">
                             Password
                           </label>
-                          <div className="float-right">
+                          {/* <div className="float-right">
                             <a
                               href="auth-forgot-password.html"
                               className="text-small"
                             >
                               Forgot Password?
                             </a>
-                          </div>
+                          </div> */}
                         </div>
                         <input
                           id="password"
@@ -78,14 +102,16 @@ export class Login extends Component {
                           name="password"
                           tabIndex="2"
                           required
+                          onChange={(e) => inputChangeHanlder(e)}
                         />
+                        <span className="text-danger"></span>
                         <div className="invalid-feedback">
                           please fill in your password
                         </div>
                       </div>
 
                       <div className="form-group">
-                        <div className="custom-control custom-checkbox">
+                        {/* <div className="custom-control custom-checkbox">
                           <input
                             type="checkbox"
                             name="remember"
@@ -99,25 +125,36 @@ export class Login extends Component {
                           >
                             Remember Me
                           </label>
-                        </div>
+                        </div> */}
                       </div>
 
                       <div className="form-group">
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-lg btn-block"
-                          tabIndex="4"
-                        >
-                          Login
-                        </button>
+                      {!loader ? (
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-lg btn-block"
+                            onClick={() => submitForm()}
+                          >
+                            Login
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-lg btn-block"
+                            disabled={true}
+                          >
+                            <span className="spinner-border spinner-border-sm mr-2"></span>
+                            Processing
+                          </button>
+                        )}
                       </div>
                     </form>
-                    <div className="text-center mt-4 mb-3">
+                    {/* <div className="text-center mt-4 mb-3">
                       <div className="text-job text-muted">
                         Login With Social
                       </div>
-                    </div>
-                    <div className="row sm-gutters">
+                    </div> */}
+                    {/* <div className="row sm-gutters">
                       <div className="col-6">
                         <a className="btn btn-block btn-social btn-facebook">
                           <span className="fab fa-facebook"></span> Facebook
@@ -128,16 +165,16 @@ export class Login extends Component {
                           <span className="fab fa-twitter"></span> Twitter
                         </a>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="mt-5 text-muted text-center">
                   Don't have an account?{" "}
-                  <a href="auth-register.html">Create One</a>
+                  <a onClick={() => goToRegister()}>Create One</a>
                 </div>
-                {/* <div className="simple-footer">
+                <div className="simple-footer">
                   Copyright &copy; Stisla 2018
-                </div> */}
+                </div>
               </div>
             </div>
           </div>
@@ -145,6 +182,6 @@ export class Login extends Component {
       </div>
     );
   }
-}
+// }
 
 export default Login;

@@ -33,7 +33,10 @@ export const Data = {
                     name: 'Products',
                     url: '/products',
                     // active: true
-                },
+                }, {
+                    name: 'Users',
+                    url: '/users',
+                }
             ]
         },
         {

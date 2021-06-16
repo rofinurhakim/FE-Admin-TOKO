@@ -1,7 +1,25 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { useForm, RegisterData } from "../../../pages/Pages/service/auth";
+import {useHistory} from 'react-router-dom'
 
-export class Register extends Component {
-  render() {
+
+const Register = () =>  {
+  const history = useHistory()
+  const { form, inputChangeHanlder } = useForm();
+  const [loader, setLoader] = useState(false);
+
+  const submitForm = () => {
+    setLoader(true);
+    RegisterData(form, setLoader, nextLogin);
+  };
+
+  const nextLogin = () => {
+    console.log('jalan')
+    history.push('/')
+    history.go()
+  }
+
+
     return (
       <div id="app">
         <section class="section">
@@ -25,25 +43,19 @@ export class Register extends Component {
                   <div class="card-body">
                     <form method="POST">
                       <div class="row">
-                        <div class="form-group col-6">
-                          <label for="first_name">First Name</label>
+                        <div class="form-group col-12">
+                          <label for="nama_lengkap">Full Name</label>
                           <input
-                            id="first_name"
+                            id="nama_lengkap"
                             type="text"
                             class="form-control"
-                            name="first_name"
+                            name="nama_lengkap"
                             autofocus
+                            onChange={(e) => inputChangeHanlder(e)}
                           />
+                          <span className="text-danger"></span>
                         </div>
-                        <div class="form-group col-6">
-                          <label for="last_name">Last Name</label>
-                          <input
-                            id="last_name"
-                            type="text"
-                            class="form-control"
-                            name="last_name"
-                          />
-                        </div>
+                        
                       </div>
 
                       <div class="form-group">
@@ -53,8 +65,9 @@ export class Register extends Component {
                           type="email"
                           class="form-control"
                           name="email"
+                          onChange={(e) => inputChangeHanlder(e)}
                         />
-                        <div class="invalid-feedback"></div>
+                          <span className="text-danger"></span>
                       </div>
 
                       <div class="row">
@@ -68,7 +81,9 @@ export class Register extends Component {
                             class="form-control pwstrength"
                             data-indicator="pwindicator"
                             name="password"
+                            onChange={(e) => inputChangeHanlder(e)}
                           />
+                             <span className="text-danger"></span>
                           <div id="pwindicator" class="pwindicator">
                             <div class="bar"></div>
                             <div class="label"></div>
@@ -79,66 +94,40 @@ export class Register extends Component {
                             Password Confirmation
                           </label>
                           <input
-                            id="password2"
+                            id="passwordKonfirmasi"
                             type="password"
                             class="form-control"
-                            name="password-confirm"
+                            name="passwordKonfirmasi"
+                            onChange={(e) => inputChangeHanlder(e)}
                           />
+                             <span className="text-danger"></span>
                         </div>
                       </div>
 
-                      <div class="form-divider">Your Home</div>
-                      <div class="row">
-                        <div class="form-group col-6">
-                          <label>Country</label>
-                          <select class="form-control selectric">
-                            <option>Indonesia</option>
-                            <option>Palestine</option>
-                            <option>Syria</option>
-                            <option>Malaysia</option>
-                            <option>Thailand</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-6">
-                          <label>Province</label>
-                          <select class="form-control selectric">
-                            <option>West Java</option>
-                            <option>East Java</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="form-group col-6">
-                          <label>City</label>
-                          <input type="text" class="form-control" />
-                        </div>
-                        <div class="form-group col-6">
-                          <label>Postal Code</label>
-                          <input type="text" class="form-control" />
-                        </div>
-                      </div>
+                      
+                     
+                      
 
                       <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            name="agree"
-                            class="custom-control-input"
-                            id="agree"
-                          />
-                          <label class="custom-control-label" for="agree">
-                            I agree with the terms and conditions
-                          </label>
-                        </div>
-                      </div>
 
-                      <div class="form-group">
-                        <button
-                          type="submit"
-                          class="btn btn-primary btn-lg btn-block"
-                        >
-                          Register
-                        </button>
+                      {!loader ? (
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-lg btn-block"
+                            onClick={() => submitForm()}
+                          >
+                            Register
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-lg btn-block"
+                            disabled={true}
+                          >
+                            <span className="spinner-border spinner-border-sm mr-2"></span>
+                            Processing
+                          </button>
+                        )}
                       </div>
                     </form>
                   </div>
@@ -151,6 +140,6 @@ export class Register extends Component {
       </div>
     );
   }
-}
+
 
 export default Register;

@@ -9,6 +9,7 @@ import { Header, Footer, Sidebar } from "./components/admin";
 // import VectorMap from "./pages/Modules/VectorMap";
 // import WeatherIcon from "./pages/Modules/WeatherIcon";
 import { useLocation } from "react-router-dom";
+import { PrivateRoute } from "./route";
 // import Subscribe from "./pages/Pages/Utilities/Subscribe";
 // import Contact from "./pages/Pages/Utilities/Contact";
 // import Invoice from "./pages/Pages/Utilities/Invoice";
@@ -149,27 +150,27 @@ function App() {
   let locationParent = locationSplit[1];
   let WithoutRouter = ["auth", "error", "utilities"];
 
-  // const RenderDataFullScreen = () => {
-  //   if (location === "/auth/forget-password") {
-  //     return <ForgotPassword />;
-  //   } else if (location === "/auth/register") {
-  //     return <Register />;
-  //   } else if (location === "/auth/reset-password") {
-  //     return <ResetPassword />;
-  //   } else if (location === "/error/503") {
-  //     return <Error503 />;
-  //   } else if (location === "/error/403") {
-  //     return <Error403 />;
-  //   } else if (location === "/error/404") {
-  //     return <Error404 />;
-  //   } else if (location === "/error/500") {
-  //     return <Error500 />;
-  //   } else if (location === "/utilities/subscribe") {
-  //     return <Subscribe />;
-  //   } else if (location === "/utilities/contact") {
-  //     return <Contact />;
-  //   }
-  // };
+  const RenderDataFullScreen = () => {
+    if (location === "/auth/forget-password") {
+      return <ForgotPassword />;
+    } else if (location === "/auth/register") {
+      return <Register />;
+    } else if (location === "/auth/reset-password") {
+      return <ResetPassword />;
+    } else if (location === "/error/503") {
+      return <Error503 />;
+    } else if (location === "/error/403") {
+      return <Error403 />;
+    } else if (location === "/error/404") {
+      return <Error404 />;
+    } else if (location === "/error/500") {
+      return <Error500 />;
+    } else if (location === "/utilities/subscribe") {
+      return <Subscribe />;
+    } else if (location === "/utilities/contact") {
+      return <Contact />;
+    }
+  };
 
   return (
     <div className="App">
@@ -186,7 +187,7 @@ function App() {
         )}
         <React.Suspense fallback={<h1>Still Loading…</h1>}>
         <Switch history={history}>
-          <Route path="/" exact component={EcommerceDashboard} />
+          <PrivateRoute path="/" exact component={EcommerceDashboard} />
           <Route path="/dashboard/general" component={GeneralDashboard} />
           <Route path="/layout/default" component={DefaultLayoutPage} />
           <Route
@@ -195,18 +196,18 @@ function App() {
           />
         
           
-          <Route
+          <PrivateRoute
             path="/products"
             component={MasterProductsPage}
             exact
           />
-           <Route
+           <PrivateRoute
             path="/products/add"
             component={addProducts}
           />
-          <Route path="/products/delete/:id" component={DeleteProduct} />
-         <Route path="/products/:id" component={EditProduct} />
-         <Route 
+          <PrivateRoute path="/products/delete/:id" component={DeleteProduct} />
+         <PrivateRoute path="/products/:id" component={EditProduct} />
+         <PrivateRoute 
             path="/Users"
             component={Users}
           />
@@ -289,6 +290,7 @@ function App() {
           <Route path="/credit" component={Credit} />
           <Route path="/utilitie/Invoice" component={Invoice} />
           <Route path="/auth/login" component={Login} />
+          <Route path="/auth/register" component={Register} />
           <Route path="/auth/forget-password" component={ForgotPassword} />
           <Route path="/auth/reset-password" component={ResetPassword} />
           <Route path="/error/503" component={Error503} />
