@@ -2,25 +2,37 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import client from "../Pages/service/axios";
 import { fieldError, clearError } from "../../utils/errorField"
-  
-
+ 
 function EditProduct() {
   const { id } = useParams();
   const location = useHistory();
-
+  const [urlImage, setUrlImage] = useState(null)
   const [form, setForm] = useState({
     nama_products: "",
     deskripsi: "",
     price: 0,
     stock: 0,
+    image: null,
   });
   const [loader, setLoader] = useState(false);
 
   const inputChangeHandler = (e) => {
     const { id, value } = e.target;
+    const { files } = e.target;
 
     if (form[id] !== "") {
       clearError(id);
+    }
+
+    if (id === "price" || id === "stock") {
+      setForm({ ...form, [id]: parseInt(value) });
+      return;
+    }
+
+
+    if (id === "image") {
+      setForm({ ...form, [id]: files[0] });
+      return;
     }
 
     setForm({ ...form, [id]: value });
@@ -29,16 +41,31 @@ function EditProduct() {
   const submitForm = () => {
     setLoader(true);
 
+    console.log(form)
+
+    let dataForm = new FormData();
+
+    for (const [key, val] of Object.entries(form)) {
+      dataForm.append(key, val);
+    }
+
     client
-      .put(`/api/v1/products/${id}`, form)
+      .put(`/api/v1/products/${id}`, dataForm, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         if (res.data.status === "success") {
           alert("Produk berhasil di update");
           location.goBack();
         }
+
+        // tampilin pesan berhasil
       })
       .catch((err) => {
         fieldError(err.response.data.message);
+        // tampilin pesan gagal
       })
       .then(() => {
         setTimeout(() => {
@@ -49,8 +76,9 @@ function EditProduct() {
 
   useEffect(() => {
     const getData = () => {
-      client.get(`/api/v1/products/${id}`).then((res) => {
-        setForm(res.data.product);
+      client.get(`/api/v1/products/`).then((res) => {
+        setForm(res.data.products);
+        setUrlImage(res.data.products.image)
       });
     };
 
@@ -75,9 +103,32 @@ function EditProduct() {
         <div className="section-body">
           <div className="card">
             <div className="card-body py-5">
+
+               <img
+                class="mb-3"
+                src={`http://localhost:5000/${urlImage}`}
+                alt="image"
+                height="300"
+                />
               <div className="form-group row mb-3">
-                <label htmlFor="nama_produk" className="col-lg-3 col-12">
-                  Nama Produk
+
+                <label htmlFor="image" className="col-lg-3 col-12">
+                  Gambar Produk
+                </label>
+                <div className="col-lg-4 col-12">
+                  <input
+                    type="file"
+                    id="image"
+                    className="form-control shadow-none"
+                    onChange={(e) => inputChangeHandler(e)}
+                  />
+                  <span className="text-danger"></span>
+                </div>
+              </div>
+
+              <div className="form-group row mb-3">
+                <label htmlFor="nama_products" className="col-lg-3 col-12">
+                  Nama Product
                 </label>
                 <div className="col-lg-4 col-12">
                   <input

@@ -46,7 +46,7 @@ export const useForm = () => {
 
 export const insertData = async (form, history, loader) => {
   client
-    .post(`/api/v1/products`, form, {
+    .post(`/api/v1/products/`, form, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

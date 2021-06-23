@@ -8,7 +8,6 @@ import NoData from "../Components/NoData";
 const MasterUsers = (props) => {
   const history = useHistory();
   let [users, setUsers] = useState([]);
-  const imageUri = "http://localhost:3000/";
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [pagecount, setPageCount] = useState(0);
@@ -25,7 +24,7 @@ const MasterUsers = (props) => {
 
   const getList = () => {
     client
-      .get("/api/v1/products", {
+      .get("/api/v1/users", {
         params: {
           page,
           limit,
@@ -37,7 +36,7 @@ const MasterUsers = (props) => {
       .then((res) => {
         console.log(res);
 
-        setUsers((prevState) => res.data.products);
+        setUsers((prevState) => res.data.users);
         setPageCount((prevState) => res.data.pageCount);
       })
       .catch((err) => {});
@@ -46,7 +45,7 @@ const MasterUsers = (props) => {
   useEffect(() => {
     const getList = () => {
       client
-        .get("/api/v1/login", {
+        .get("/api/v1/users", {
           params: {
             page,
             limit,
@@ -56,7 +55,7 @@ const MasterUsers = (props) => {
           },
         })
         .then((res) => {
-          setUsers((prevState) => res.data.users);
+          setUsers((prevState) => res.data.user);
           setPageCount((prevState) => res.data.pageCount);
         })
         .catch((err) => {});
@@ -100,7 +99,7 @@ const MasterUsers = (props) => {
                 <div className="col-12">
                   <div className="float-left">
                     <Link
-                      to="/products/add"
+                      to="/users/add"
                       className="btn btn-icon btn-success"
                     >
                       <i className="fa fa-plus"></i>
@@ -136,34 +135,20 @@ const MasterUsers = (props) => {
                   <table className="table table-striped" id="table-1">
                     <thead>
                       <tr>
-                        <th>Image</th>
+                        <th>Nama</th>
                         <th
                           className="sortable"
-                          onClick={() => sorting("nama_products")}
+                          onClick={() => sorting("nama_lengkap")}
                         >
-                          Nama
-                        </th>
-                        <th
-                          className="sortable"
-                          onClick={() => sorting("rating")}
-                        >
-                          Rating
+                          Email
                         </th>
                         <th
                           className="sortable"
-                          onClick={() => sorting("price")}
+                          onClick={() => sorting("email")}
                         >
-                          Price
+                          action
                         </th>
-                        <th
-                          className="sortable"
-                          onClick={() => sorting("stock")}
-                        >
-                          Stock
-                        </th>
-                        <th style={{ width: "12%", textAlign: "center" }}>
-                          Action
-                        </th>
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -171,30 +156,13 @@ const MasterUsers = (props) => {
                         console.log(item);
                         return (
                           <tr key={index}>
-                            <td>
-                              <img
-                                src={`${imageUri}${
-                                  item.image
-                                    ? item.image
-                                    : "uploads/no-image.png"
-                                }`}
-                                alt=""
-                                style={{ width: 40 }}
-                                className="img-fluid rounded"
-                              />
-                            </td>
-                            <td>{item.nama_products}</td>
-                            <td>{item.rating}</td>
-                            <td>
-                              Rp.{" "}
-                              {new Number(item.price).toLocaleString("id-ID")}
-                            </td>
-                            <td>{item.stock}</td>
+                            <td>{item.nama_lengkap}</td>
+                            <td>{item.email}</td>
                             <td>
                               <div className="row">
                                 <div className="col-6">
                                   <Link
-                                    to={`/products/${item.id}`}
+                                    to={`/users/${item.id}`}
                                     className="btn btn-icon btn-warning"
                                   >
                                     <i className="far fa-edit"></i>
@@ -202,7 +170,7 @@ const MasterUsers = (props) => {
                                 </div>
                                 <div className="col-6">
                                   <Link
-                                    to={`/products/delete/${item.id}`}
+                                    to={`/users/delete/${item.id}`}
                                     className="btn btn-icon btn-danger"
                                   >
                                     <i className="fas fa-trash"></i>
