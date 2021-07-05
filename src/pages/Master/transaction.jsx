@@ -5,9 +5,9 @@ import { Link, useHistory } from 'react-router-dom'
 import Pagination from "../Components/Pagination"
 import NoData from "../Components/NoData";
 
-const MasterUsers = (props) => {
+const MasterTransaction = (props) => {
   const history = useHistory();
-  let [users, setUsers] = useState([]);
+  let [transaction, setTransaction] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [pagecount, setPageCount] = useState(0);
@@ -24,7 +24,7 @@ const MasterUsers = (props) => {
 
   const getList = () => {
     client
-      .get("/api/v1/users", {
+      .get(`/api/v1/transaction`, {
         params: {
           page,
           limit,
@@ -36,7 +36,7 @@ const MasterUsers = (props) => {
       .then((res) => {
         console.log(res);
 
-        setUsers((prevState) => res.data.users);
+        setTransaction((prevState) => res.data.transaction);
         setPageCount((prevState) => res.data.pageCount);
       })
       .catch((err) => {});
@@ -45,7 +45,7 @@ const MasterUsers = (props) => {
   useEffect(() => {
     const getList = () => {
       client
-        .get("/api/v1/users", {
+        .get("/api/v1/transaction", {
           params: {
             page,
             limit,
@@ -55,7 +55,7 @@ const MasterUsers = (props) => {
           },
         })
         .then((res) => {
-          setUsers((prevState) => res.data.user);
+          setTransaction((prevState) => res.data.transaction);
           setPageCount((prevState) => res.data.pageCount);
         })
         .catch((err) => {});
@@ -81,13 +81,13 @@ const MasterUsers = (props) => {
     <div className="main-content">
       <section className="section">
         <div className="section-header">
-          <h1>Users</h1>
+          <h1>Transacion Users</h1>
           <div className="section-header-breadcrumb">
             <div className="breadcrumb-item active">
               <a href="#">Dashboard</a>
             </div>
             <div className="breadcrumb-item">
-              <a href="#">Users</a>
+              <a href="#">Transaction Users</a>
             </div>
           </div>
         </div>
@@ -98,23 +98,16 @@ const MasterUsers = (props) => {
               <div className="row mb-4">
                 <div className="col-12">
                   <div className="float-left">
-                    <Link
-                      to="/Users/add"
-                      className="btn btn-icon btn-success"
-                    >
-                      <i className="fa fa-plus"></i>
-                      Tambah
-                    </Link>
                   </div>
                   <div className="float-right">
-                    <div className="input-group">
+                    <div className="input-group"> 
                       <input
                         type="text"
                         id="searchText"
                         className="form-control shadow-none"
                         placeholder="Search here..."
                         onChange={(e) => searchHandler(e)}
-                      />
+                      /> 
                       <span className="input-group-append">
                         <button
                           className="btn btn-primary"
@@ -124,53 +117,64 @@ const MasterUsers = (props) => {
                         </button>
                       </span>
                     </div>
-                  </div>
+                  </div> 
                 </div>
               </div>
 
-              {!users.length ? (
+              {!transaction.length ? (
                 <NoData />
               ) : (
                 <div className="table-responsive">
                   <table className="table table-striped" id="table-1">
                     <thead>
                       <tr>
-                        <th>Nama</th>
-                        <th
-                          className="sortable"
-                          onClick={() => sorting("nama_lengkap")}
-                        >
-                          Email
-                        </th>
-                        <th
-                          className="sortable"
-                          onClick={() => sorting("email")}
-                        >
-                          action
-                        </th>
                         
+                        <th
+                          className="sortable"
+                          onClick={() => sorting("user_id")}
+                        >
+                          User
+                        </th>
+                        <th
+                          className="sortable"
+                          onClick={() => sorting("transaction_id")}
+                        >
+                          Transaction
+                        </th>
+                        {/* <th
+                          className="sortable"
+                          onClick={() => sorting("price")}
+                        >
+                          price
+                        </th> */}
+                        <th
+                          className="sortable"
+                          onClick={() => sorting("status")}
+                        >
+                          Status 
+                        </th>
+                        <th style={{ width: "12%", textAlign: "center" }}>
+                          Action
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {users.map((item, index) => {
+                      {transaction.map((item, index) => {
                         console.log(item);
                         return (
                           <tr key={index}>
-                            <td>{item.nama_lengkap}</td>
-                            <td>{item.email}</td>
+                           
+                            <td>{item.user_id}</td>
+                            <td>{item.transaction_id}</td>
+                          
+                            <td>{item.status}</td>
+                           
                             <td>
                               <div className="row">
-                                {/* <div className="col-6">
-                                  <Link
-                                    to={`/users/${item.id}`}
-                                    className="btn btn-icon btn-warning"
-                                  >
-                                    <i className="far fa-edit"></i>
-                                  </Link>
-                                </div> */}
+                               
                                 <div className="col-6">
                                   <Link
-                                    to={`/users/delete/${item.id}`}
+                                    to={`/transaction/delete/${item.id}`}
                                     className="btn btn-icon btn-danger"
                                   >
                                     <i className="fas fa-trash"></i>
@@ -205,4 +209,4 @@ const MasterUsers = (props) => {
   );
 };
 
-export default MasterUsers;
+export default MasterTransaction;

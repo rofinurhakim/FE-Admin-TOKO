@@ -42,6 +42,13 @@ import DeleteProduct from "./pages/Master/DeleteProducts";
 
 //users route
 import Users from "./pages/Master/users"
+import AddUsers from "./pages/Master/addUsers"
+import DeleteUsers from "./pages/Master/deleteUsers.jsx";
+
+//transactiom route 
+import Transaction from "./pages/Master/transaction.jsx"
+import DeleteTransaction from './pages/Master/DeleteTransaction'
+
 
 import EcommerceDashboard from "./pages/Dashboard/EcommerceDashboard";
 import GeneralDashboard from "./pages/Dashboard/GeneralDashboard";
@@ -95,6 +102,7 @@ import Login from "./pages/Pages/Auth/Login";
 import Register from "./pages/Pages/Auth/Register";
 import ResetPassword from "./pages/Pages/Auth/ResetPassword";
 import Credit from "./pages/Pages/Credits";
+
 
 
 // const Posts = React.lazy(() => import('./pages/Pages/Features/Posts'));
@@ -205,13 +213,40 @@ function App() {
             path="/products/add"
             component={addProducts}
           />
-          <PrivateRoute path="/products/delete/:id" component={DeleteProduct} />
-         <PrivateRoute path="/products/:id" component={EditProduct} />
+          <Route path="/products/delete/:id"  > <DeleteProduct/> </Route>
+         <Route path="/products/:id" > <EditProduct/> </Route>
+         
+         <Route
+            path="/users/add"
+            component={AddUsers}
+          />
+            <Route
+            path="/users/delete/:id"
+            
+          > <DeleteUsers/> </Route>
+          
+
          <PrivateRoute 
-            path="/Users"
+            path="/users"
             component={Users}
           />
 
+          <PrivateRoute 
+            path="/transaction/delete/:id"
+            component={DeleteTransaction}
+          />
+
+          <PrivateRoute 
+            path="/transaction"
+            component={Transaction}
+          />
+
+         
+
+          
+
+        
+        
           <Route path="/bootstrap/alert" component={BootstrapAlert} />
           <Route path="/bootstrap/badge" component={BootstrapBadge} />
           <Route path="/bootstrap/breadcrumb" component={BootstrapBreadcrumb} />

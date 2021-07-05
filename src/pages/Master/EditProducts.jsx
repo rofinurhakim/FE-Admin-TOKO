@@ -76,9 +76,9 @@ function EditProduct() {
 
   useEffect(() => {
     const getData = () => {
-      client.get(`/api/v1/products/`).then((res) => {
-        setForm(res.data.products);
-        setUrlImage(res.data.products.image)
+      client.get(`/api/v1/products/${id}`).then((res) => {
+        setForm(res.data.product);
+        setUrlImage(res.data.product.image)
       });
     };
 
@@ -106,7 +106,7 @@ function EditProduct() {
 
                <img
                 class="mb-3"
-                src={`http://localhost:5000/${urlImage}`}
+                src={`http://localhost:3000/${urlImage}`}
                 alt="image"
                 height="300"
                 />
@@ -127,13 +127,13 @@ function EditProduct() {
               </div>
 
               <div className="form-group row mb-3">
-                <label htmlFor="nama_products" className="col-lg-3 col-12">
+                <label htmlFor="nama_produk" className="col-lg-3 col-12">
                   Nama Product
                 </label>
                 <div className="col-lg-4 col-12">
                   <input
                     type="text"
-                    id="nama_produk"
+                    id="nama_products"
                     className="form-control shadow-none"
                     value={form.nama_products}
                     onChange={(e) => inputChangeHandler(e)}

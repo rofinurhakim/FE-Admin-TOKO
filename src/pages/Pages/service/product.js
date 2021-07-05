@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useParams } from "react";
 import { clearError, fieldError } from "../../../utils/errorField";
 import client from "./axios";
 
 export const useForm = () => {
+  
+  
   const [form, setForm] = useState({
     nama_products: "",
     deskripsi: "",
@@ -12,6 +14,7 @@ export const useForm = () => {
   });
 
   const inputChangeHanlder = (e) => {
+    
     const { value, id } = e.target;
     const { files } = e.target;
 
@@ -45,8 +48,9 @@ export const useForm = () => {
 };
 
 export const insertData = async (form, history, loader) => {
+ 
   client
-    .post(`/api/v1/products/`, form, {
+    .post(`/api/v1/products`, form, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

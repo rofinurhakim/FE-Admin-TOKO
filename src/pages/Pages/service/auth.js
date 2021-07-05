@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import { clearError, fieldError } from "../utils/errorField";
+// import { clearError, fieldError } from "../../../utils/errorField"
 import client from "./axios";
 
 
@@ -44,10 +44,7 @@ export const useForm = () => {
         }
         // simpan di local storage
       })
-      // .catch((err) => {
-      //   fieldError(err.response.data.message);
-      //   return;
-      // })
+     
       .then(() => {
         setTimeout(() => {
           loader(false);
@@ -60,3 +57,29 @@ export const useForm = () => {
       localStorage.removeItem('user')
     
    }
+
+   export const insertData = async (form, history, loader) => {
+ 
+    client
+      .post(`/api/v1/register`, form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      
+      .then((res) => {
+        if (res.data.status) {
+          alert("Users berhasil di tambahkan");
+          history.goBack();
+        }
+      })
+      // .catch((err) => {
+      //   fieldError(err.response.data.message);
+      //   return;
+      // })
+      .then(() => {
+        setTimeout(() => {
+          loader(false);
+        }, 1500);
+      });
+  };

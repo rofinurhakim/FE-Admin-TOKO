@@ -36,6 +36,9 @@ export const Data = {
                 }, {
                     name: 'Users',
                     url: '/users',
+                }, {
+                    name: 'Transaction',
+                    url: '/transaction'
                 }
             ]
         },

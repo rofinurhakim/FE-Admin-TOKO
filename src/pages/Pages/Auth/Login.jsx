@@ -2,7 +2,7 @@ import  React, { Component, useState }from "react";
 import { useForm, LoginData } from "../../../pages/Pages/service/login";
 import $ from "jquery";
 import {useHistory} from 'react-router-dom'
-
+import {row,section,form} from "bootstrap"
 const Login = () => {
   const history = useHistory()
   const { form, inputChangeHanlder } = useForm();
